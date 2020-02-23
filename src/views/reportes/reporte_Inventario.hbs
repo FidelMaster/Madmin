@@ -1,0 +1,63 @@
+<div class="row">
+      <div class="col-sm-4">
+   <h1> Reporte de Inventario
+    </h1>
+      </div>
+ 
+    <div class="col-sm-4 ">
+    <!-- small box -->
+    <div class="small-box bg-success">
+      <div class="inner">
+        {{#each t}}
+        <h3>{{total}}<sup style="font-size: 20px">$ </sup></h3>
+        {{/each}}
+        <p>Valor del inventario</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-stats-bars"></i>
+      </div>
+
+    </div>
+  </div>
+</div> 
+ <!-- Table row -->
+              <div class="row"  style="margin-right: 200px; margin-top:10px;">
+                <div class="col-12 table-responsive" style="margin-right: 20px;">
+                  <table class="table table-striped">
+                    <thead>
+                        
+                    <tr>
+
+                      <th>Codigo Producto</th>
+                      <th>Imagen</th>
+                      <th>Nombre</th>
+                      <th>Descripcion</th>
+                      <th>Cantidad Inventariada</th>
+                      <th>Costo por unidad</th>
+                      <th>Costo Total</th>
+                    </tr>
+                   
+                    </thead>
+                    <tbody>
+                          {{#each inv}}
+                    <tr>
+                         <td>PRO-{{idProducto}}</td>
+                    <td><img src="../{{imagen}}" style="height: 100px; width:100px " class="card-img"></td>
+                      <td>{{nombre}}</td>                    
+                      <td >{{categoria}}</td>
+                      <td>${{existencia}}</td>
+                      <td>${{costo}}</td>
+                      <td>${{CostoTotal}}</td>
+                    </tr>
+                      {{/each}}
+                 
+                 
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.col -->
+              </div>
+
+              <script src="/js/jspdf.js"></script>
+	<script src="/js/jquery-2.1.3.js"></script>
+	<script src="/js/pdfFromHTML.js"></script>

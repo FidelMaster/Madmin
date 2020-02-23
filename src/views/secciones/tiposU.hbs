@@ -1,0 +1,34 @@
+ <div class="row">
+    <h1>Tipos de Usuario</h1>
+ </div>
+<div class="row" style="margin-right: 200px; margin-top:10px;">
+
+ 
+ 
+ 
+              <table id="example1" class="table table-bordered table-striped" >
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th></th>
+                  <th></th>
+               
+                </tr>
+                </thead>
+                <tbody>
+                    {{#each t}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{tipo}}</td>
+                          <td><button class="btn btn-primary">editar</button></td>
+                        <td><button>eliminar</button></td>
+                    </tr>
+                    {{/each}}
+               </tbody>
+              </table>
+         
+
+
+ 
+</div>

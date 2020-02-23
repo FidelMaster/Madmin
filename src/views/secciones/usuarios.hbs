@@ -1,0 +1,194 @@
+<style>
+    #myInput {
+        background-position: 10px 12px;
+        /* Position the search icon */
+        background-repeat: no-repeat;
+        /* Do not repeat the icon image */
+        width: 100%;
+        /* Full-width */
+        font-size: 16px;
+        /* Increase font-size */
+        padding: 12px 20px 12px 40px;
+        /* Add some padding */
+        border: 1px solid #ddd;
+        /* Add a grey border */
+        margin-bottom: 12px;
+        /* Add some space below the input */
+    }
+
+    #myTable {
+        border-collapse: collapse;
+        /* Collapse borders */
+        width: 100%;
+        /* Full-width */
+        border: 1px solid #ddd;
+        /* Add a grey border */
+        font-size: 18px;
+        /* Increase font-size */
+    }
+
+    #myTable th,
+    #myTable td {
+        text-align: left;
+        /* Left-align text */
+        padding: 12px;
+        /* Add padding */
+    }
+
+    #myTable tr {
+        /* Add a bottom border to all table rows */
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myTable tr.header,
+    #myTable tr:hover {
+        /* Add a grey background color to the table header and on hover */
+        background-color: #f1f1f1;
+    }
+</style>
+<div class="row">
+
+
+    <div class="col-md-6">
+        <h3>Usuarios Registrado</h3>
+    </div>
+
+
+    <div class="col-sm-6">
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo Usuario
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Correo</label>
+                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword4"
+                                        placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault01">Nombre</label>
+                                    <input type="text" class="form-control" id="validationDefault01"
+                                        placeholder="Nombre" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault02">Apellido</label>
+                                    <input type="text" class="form-control" id="validationDefault02"
+                                        placeholder="Apellido" required>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationDefault03">Celular</label>
+                                    <input type="text" class="form-control" id="validationDefault03"
+                                        placeholder="Celular" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationDefault04">Tipo Usuario</label>
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Seleccione una opcion</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." style="width: 800px;">
+</div>
+<div class="row" style="margin-right: 200px; margin-top:10px;">
+
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Celular</th>
+                <th>Tipo Usuario</th>
+                <th> </th>
+                <th> </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each p}}
+            <tr>
+                <td>US-{{id}}</td>
+                <td>{{nombre}}</td>
+                <td>{{apellido}}</td>
+                <td>{{correo}}</td>
+                <td>{{celular}}</td>
+                <td>{{tipo}}</td>
+                <td><button class="btn btn-primary">editar</button></td>
+                <td><button class="btn btn-danger">eliminar</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+
+
+
+
+</div>
+
+<script>
+    function myFunction() {
+
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
