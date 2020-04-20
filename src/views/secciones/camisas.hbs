@@ -73,13 +73,22 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form action="/camisas"  id="validationForm" name="validationForm" method="POST"  enctype="multipart/form-data">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Codigo de producto:</label>
+                  <input type="text" class="form-control" name="cod" placeholder="Codigo Producto: CA###" required>
+                  
+                </div>
+
+              </div>
+
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Imagen:</label>
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Escoja su archivo</label>
+                      
+                      <input name="imagen" type="file" />
                   </div>
                 </div>
 
@@ -87,13 +96,15 @@
               <div class="form-row">
                 <div class="col-md-4 mb-3">
                   <label for="validationDefault01">Nombre</label>
-                  <input type="text" class="form-control" id="validationDefault01" placeholder="Nombre" required>
-                </div>
+                  <input type="text" class="form-control" id="nombre" name="nombre"   onKeyPress="return soloLetras(event);"  placeholder="Nombre" required>
+                   </div>
                 <div class="col-md-4 mb-3">
                   <label for="validationDefault02">Categoria</label>
-                  <select id="inputState" class="form-control">
+                  <select id="categoria" name="categoria" class="form-control">
                     <option selected>Seleccione una opcion</option>
-                    <option>...</option>
+                      {{#each categoria}}
+                      <option value="{{id}}">{{nombre}}</option>
+                    {{/each}}
                   </select>
                 </div>
 
@@ -101,27 +112,43 @@
               <div class="form-row">
                 <div class="col-md-6 mb-3">
                   <label for="validationDefault03">Marca</label>
-                  <select id="inputState" class="form-control">
+                  <select id="marca" name="marca" class="form-control">
                     <option selected>Seleccione una opcion</option>
-                    <option>...</option>
+                    {{#each marca}}
+                    <option value="{{id}}">{{nombre}}</option>
+                    {{/each}}
                   </select>
                 </div>
                 <div class="col-md-3 mb-3">
                   <label for="validationDefault04">Tela</label>
-                  <select id="inputState" class="form-control">
+                  <select id="tela" name="tela" class="form-control">
                     <option selected>Seleccione una opcion</option>
-                    <option>...</option>
+                     {{#each tela}}
+                    <option value="{{id}}">{{nombre}}</option>
+                    {{/each}}
                   </select>
                 </div>
 
               </div>
 
+                <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label for="validationDefault01">Precio Compra</label>
+                  <input type="text" class="form-control"  onKeyPress="return SoloNumeros(event);"  name="precio_compra" placeholder="Precio Compra" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                     <label for="validationDefault01">Precio Venta</label>
+                  <input type="text" class="form-control" onKeyPress="return SoloNumeros(event);"  name="precio_venta" placeholder="Precio Venta" required>
+                  </div>
+
+              </div>
+              <button type="submit" class="btn btn-primary">Agregar</button>
 
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Agregar</button>
+            
           </div>
         </div>
       </div>
@@ -146,28 +173,72 @@
               <img src="../{{imagen}}" class="card-img">
 
 
-              <h2 class="card-title">{{nombre}}</h2>
-              <h2 class="card-title"><br>{{marca}}/</br></h2>
-              <h2 class="card-title"><br>{{material}}</br></h2>
+             
 
-
-              <div class="row">
-
-                <div class="col-md-6">
-                  <button class="btn btn-primary">Editar</button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn btn-danger">eliminar</button>
-                </div>
-              </div>
+              
 
             </div>
 
+             <h2 class="card-title">{{nombre}}</h2>
+              <h2 class="card-title"><br>{{marca}}/{{material}}</br></h2>
+              <h2 class="card-title"><br></br></h2>
 
           </div>
+          
         </div>
       </div>
     </div>
   </div>
   {{/each}}
 </div>
+
+
+<script>
+
+  //Se utiliza para que el campo de texto solo acepte letras
+function soloLetras(e) {
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toString();
+    letras = " áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ";//Se define todo el abecedario que se quiere que se muestre.
+    especiales = [8, 37, 39, 46, 6]; //Es la validación del KeyCodes, que teclas recibe el campo de texto.
+
+    tecla_especial = false
+    for(var i in especiales) {
+        if(key == especiales[i]) {
+            tecla_especial = true;
+            break;
+        }
+    }
+
+    if(letras.indexOf(tecla) == -1 && !tecla_especial){
+     
+        return false;
+      }
+}
+     // La siguiente funcion valida el elemento input
+function SoloNumeros(evt){
+ if(window.event){//asignamos el valor de la tecla a keynum
+  keynum = evt.keyCode; //IE
+ }
+ else{
+  keynum = evt.which; //FF
+ } 
+ //comprobamos si se encuentra en el rango numérico y que teclas no recibirá.
+ if((keynum > 47 && keynum < 58) || keynum == 8 || keynum == 13 || keynum == 6 ){
+  return true;
+ }
+ else{
+  return false;
+ }
+}
+
+  function ShowSelected()
+     {
+       /* Para obtener el valor */
+   
+       var categoria= document.getElementById("categoria").value;
+       var marca= document.getElementById("marca").value;
+       var tela= document.getElementById("tela").value;
+       return parseInt(categoria,marca,tela);
+    }
+</script>

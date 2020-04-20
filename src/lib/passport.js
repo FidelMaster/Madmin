@@ -6,20 +6,20 @@ const helpers = require('./helpers');
 
 passport.use('local.signin', new LocalStrategy({
   usernameField: 'correo',
-  passwordField: 'clave',
+  passwordField: 'password',
   passReqToCallback: true
 }, async (req, correo, clave, done) => {
   console.log(correo)
   
-  const rows = await pool.query('SELECT * FROM credenciales WHERE correo = ?', [correo]);
+  const rows = await pool.query('select  u.id,u.correo ,u.password from tbladmin_users as u inner join tbladmin_roles_users as rol on(rol.id_user=u.id) WHERE u.correo = ? and rol.id_role in (2,3,4)', [correo]);
   if (rows.length > 0) {
     const user = rows[0];
      
-    const validPassword = await helpers.matchPassword(clave, user.clave)
+    const validPassword = await helpers.matchPassword(clave, user.password)
     console.log(validPassword);
     if (validPassword) {
       done(null, user, req.flash('success', 'Welcome ' + user.correo));
-      console.log(validPassword);
+      console.log(user);
     } else {
       console.log("esta mal");
       done(null, false, req.flash('message', 'Incorrect Password'));
@@ -31,28 +31,22 @@ passport.use('local.signin', new LocalStrategy({
 
 passport.use('local.signup', new LocalStrategy({
   usernameField: 'correo',
-  passwordField: 'clave',
+  passwordField: 'password',
   passReqToCallback: true
-}, async (req, correo, clave, done) => {
+}, async (req, correo, password, done) => {
 
-  
-  let newUser = {
-   
-    correo,
-    clave
-  };
-  newUser.clave = await helpers.encryptPassword(clave);
-  // Saving in the Database
-  const result = await pool.query('INSERT INTO Credenciales SET ? ', newUser);
+ 
+ 
   newUser.id = result.insertId;
   return done(null, newUser);
 }));
 
 passport.serializeUser((user, done) => {
+  console.log(user);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  const rows = await pool.query('SELECT * FROM credenciales WHERE id = ?', [id]);
+  const rows = await pool.query('select * from tbladmin_users where id = ?', [id]);
   done(null, rows[0]);
 });

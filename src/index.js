@@ -8,6 +8,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
+const busboy = require("then-busboy");
 
 const { database } = require('../Model/cadena');
 
@@ -43,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //app.use(validator());
 
-
+ 
 // Global variables
 app.use((req, res, next) => {
   app.locals.message = req.flash('message');

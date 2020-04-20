@@ -23,20 +23,24 @@
                 <address>
                   {{#each persona}}
                   <strong>{{nombre}} {{apellido}}</strong><br>
-
+                  Direccion: (505) {{direccion}}<br>
+                  Ciudad: (505) {{ciudad}}<br>
                   celular: (505) {{celular}}<br>
-                  Email: john.doe@example.com
+                  Telefono:{{telefono}}<br>
                 </address>
                 {{/each}}
               </div>
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
                 {{#each cod}}
-                <b>Factura #{{id}}</b><br>
+                <b>Factura #{{id}}</b>
                 <br>
-                <b>Codigo Venta:</b> {{codVenta}}<br>
+                <b>Numero de Pedido:</b> {{id}}<br>
                 <b>Fecha del Pedido:</b> {{fecha}}<br>
 
+                {{/each}}
+                 {{#each estado}}
+                  <b>Estado:{{nombre}}</b>
                 {{/each}}
               </div>
               <!-- /.col -->
@@ -66,7 +70,7 @@
                       <td><img src="../{{imagen}}" style="height: 100px; width:100px " class="card-img"></td>
                       <td>{{nombre}}</td>
 
-                      <td>${{precio}}</td>
+                      <td>${{precio_venta}}</td>
                     </tr>
                     {{/each}}
 
@@ -92,11 +96,11 @@
                     {{#each totales}}
                     <tr>
                       <th style="width:50%">Subtotal:</th>
-                      <td>${{total}}</td>
+                      <td>${{subtotal}}</td>
                     </tr>
                     <tr>
                       <th>Tax </th>
-                      <td>$0</td>
+                      <td>${{tax}}</td>
                     </tr>
 
                     <tr>
@@ -108,16 +112,15 @@
                 </div>
               </div>
               <div class="col-6">
-                {{#each cod}}
-              
-                <a class="btn btn-success" href="http://localhost:4000/Recibir/Pedido/{{codVenta}}"
-                  style="color:rgb(230, 213, 213);">Recibir Orden</a>
-
                 
+                      {{#each cod}}
+                   <a class="btn btn-success" href="http://localhost:4000/Recibir/Pedido/{{cod_factura}}"
+                    style="color:rgb(230, 213, 213);">Recibir Orden</a>
+
+                    {{/each}}
+               
  
-             
- 
-                {{/each}}
+                
               </div>
               <!-- /.col -->
             </div>
