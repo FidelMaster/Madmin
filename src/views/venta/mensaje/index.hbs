@@ -1,0 +1,42 @@
+{{>venta/navigation}}
+<div>
+  <div class="card-header">
+    <h3 class="card-title">Inbox</h3>
+
+    <div class="card-tools">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control" placeholder="Search Mail">
+        <div class="input-group-append">
+          <div class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card-tools -->
+  </div>
+  <div class="table-responsive mailbox-messages">
+    <table class="table table-hover table-striped">
+      <tbody>
+        {{#each m}}
+        <tr>
+          <td>
+            <div class="icheck-primary">
+              <input type="checkbox" value="" id="check1">
+              <label for="check1"></label>
+            </div>
+          </td>
+          <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+          <td class="mailbox-name"><a href="read-mail.html">{{Nombre}}</a></td>
+          <td class="mailbox-subject"><b>{{Correo}}</b> {{Mensaje}}
+          </td>
+          <td class="mailbox-attachment"></td>
+          <td class="mailbox-date">{{timeago creado}}</td>
+        </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+    <!-- /.table -->
+  </div>
+</div>

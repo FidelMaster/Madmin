@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   layoutsDir: path.join(app.get('views'), 'layouts'),
-  partialsDir: path.join(app.get('views'), 'partials'),
+  partialsDir: path.join(app.get('views'), 'partials/'),
   extname: '.hbs',
   helpers: require('./lib/handlerbars')
 }))
@@ -57,7 +57,8 @@ app.use((req, res, next) => {
 app.use(require('./routes/index'));
 app.use(require('./routes/authentication'));
 app.use(require('./routes/admin'));
- 
+app.use(require('./routes/venta/ventas_routes'));
+app.use(require('./routes/inventario/inventario_routes'));
 
 // Public
 app.use(express.static(path.join(__dirname, 'public')));

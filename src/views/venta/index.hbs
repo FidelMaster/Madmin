@@ -1,0 +1,61 @@
+{{>venta/navigation}}
+<div class="col-md-8">
+
+ 
+    <div class="row">
+      <div class="col-sm-4 col-xs-12 ">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            {{#each tpp}}
+            <h3>{{totalPedido}}</h3>
+            {{/each}}
+            <p>Total Ordenes Pendientes</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ./col -->
+      <div class="col-sm-4  col-xs-12 ">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            {{#each tv}}
+            <h3>${{tventas}}<sup style="font-size: 20px"></sup></h3>
+            {{/each}}
+            <p>Ventas</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-sm-4 col-xs-12 ">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            {{#each tc}}
+            <h3>{{total}}</h3>
+            {{/each}}
+            <p>Clientes </p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    
+
+ 
+</div>
+ 

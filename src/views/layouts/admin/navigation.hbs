@@ -1,0 +1,220 @@
+<!-- Main Sidebar Container -->
+{{#if user}}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="index3.html" class="brand-link">
+    <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light">Mombashop</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+      <div class="info">
+        <a href="#" class="d-block">Admin</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+        <li class="nav-item has-treeview menu-open">
+          <a href="#" class="nav-link active">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Principal
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/perfil" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Inicio</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <li class="nav-header">Usuarios</li>
+        <li class="nav-item has-treeview">
+          <a href="/tiposU" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Tipos Usuarios
+
+
+            </p>
+          </a>
+
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="/usuario" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Registro
+
+            </p>
+          </a>
+
+        </li>
+        <li class="nav-header">INVENTARIO</li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tree"></i>
+            <p>
+              Productos
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/producto/camisas" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Camisas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/producto/pantalones" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pantalones</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/producto/gorras" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gorras</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/producto/zapatos" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Zapatos</p>
+              </a>
+            </li>
+
+
+          </ul>
+
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="/inventario" class="nav-link">
+            <i class="nav-icon far fa-plus-square"></i>
+            <p>
+              Inventario
+
+            </p>
+          </a>
+
+        </li>
+        <li class="nav-header">Clientes</li>
+        <li class="nav-item">
+          <a href="/clientes" class="nav-link">
+            <i class="fas fa-circle nav-icon"></i>
+            <p>Registro</p>
+          </a>
+        </li>
+
+     
+        <li class="nav-item has-treeview">
+          <a href="/mensajes" class="nav-link">
+            <i class="nav-icon far fa-envelope"></i>
+            <p>
+              Mensajes
+
+            </p>
+          </a>
+
+        </li>
+        <li class="nav-header">PEDIDOS</li>
+
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Registro de Pedidos
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+             <li class="nav-item">
+              <a href="/pedidos/pendientes" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pedidos Pendientes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/pedidos/reparto" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pedidos en Reparto</p>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a href="/pedidos/transito" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pedidos en Transito</p>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a href="/pedidos/entregados" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pedidos Entregados</p>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a href="/pedidos" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Todos Los Pedidos</p>
+              </a>
+            </li>
+         
+
+
+          </ul>
+        </li>
+
+        <li class="nav-header">Reportes</li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              Resumen
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/reporte/ventas" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Reporte de Ventas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/reporte/reporte_inventario" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Reporte de Inventario</p>
+              </a>
+            </li>
+
+
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="http://localhost:4000/logout" class="nav-link">
+            <i class="fas fa-circle nav-icon"></i>
+            <p>Cerrar</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
+{{/if}}

@@ -1,0 +1,41 @@
+{{>admin/navigation}}
+<div class="col-md-8">
+
+ 
+
+ <div class="row">
+    <h1>Tipos de Usuario</h1>
+ </div>
+<div class="row" >
+
+ 
+ 
+ 
+              <table id="example1" class="table table-bordered table-striped" >
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th></th>
+                  <th></th>
+               
+                </tr>
+                </thead>
+                <tbody>
+                    {{#each t}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{nombre}}</td>
+                          <td><button class="btn btn-primary">editar</button></td>
+                        <td><button>eliminar</button></td>
+                    </tr>
+                    {{/each}}
+               </tbody>
+              </table>
+         
+
+
+ 
+</div>
+
+</div>

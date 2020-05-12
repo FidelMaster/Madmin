@@ -1,0 +1,218 @@
+<style>
+    #myInput {
+        background-position: 10px 12px;
+        /* Position the search icon */
+        background-repeat: no-repeat;
+        /* Do not repeat the icon image */
+        width: 100%;
+        /* Full-width */
+        font-size: 16px;
+        /* Increase font-size */
+        padding: 12px 20px 12px 40px;
+        /* Add some padding */
+        border: 1px solid #ddd;
+        /* Add a grey border */
+        margin-bottom: 12px;
+        /* Add some space below the input */
+    }
+
+    #myTable {
+        border-collapse: collapse;
+        /* Collapse borders */
+        width: 100%;
+        /* Full-width */
+        border: 1px solid #ddd;
+        /* Add a grey border */
+        font-size: 18px;
+        /* Increase font-size */
+    }
+
+    #myTable th,
+    #myTable td {
+        text-align: left;
+        /* Left-align text */
+        padding: 12px;
+        /* Add padding */
+    }
+
+    #myTable tr {
+        /* Add a bottom border to all table rows */
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myTable tr.header,
+    #myTable tr:hover {
+        /* Add a grey background color to the table header and on hover */
+        background-color: #f1f1f1;
+    }
+</style>
+
+{{>admin/navigation}}
+<div class="col-md-8">
+
+ 
+<div class="row">
+
+
+    <div class="col-md-6">
+        <h3>Tipo de marcas</h3>
+    </div>
+
+
+    <div class="col-sm-6">
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar 
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/tipo/marca/post" method="POST">
+                        
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault01">Marca</label>
+                                    <input type="text"  name="tipo" class="form-control" id="validationDefault01"
+                                        placeholder="Ingrese Marca" required>
+                                </div>
+                                
+
+                            </div>
+                            
+
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." style="width: 800px;">
+</div>
+<div class="row" style="margin-right: 200px; margin-top:10px;">
+
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+               
+                <th> </th>
+                <th> </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each t}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{nombre}}</td>
+             
+              
+                <td><button class="btn btn-primary">editar</button></td>
+                <td><button class="btn btn-danger">eliminar</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+
+
+
+
+</div>
+</div>
+
+ 
+<script>
+     function ShowSelected()
+     {
+       /* Para obtener el valor */
+   
+       var rol= document.getElementById("rol").value;
+       return parseInt(rol);
+ 
+
+   }
+
+    
+  //Se utiliza para que el campo de texto solo acepte letras
+function soloLetras(e) {
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toString();
+    letras = " áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ";//Se define todo el abecedario que se quiere que se muestre.
+    especiales = [8, 37, 39, 46, 6]; //Es la validación del KeyCodes, que teclas recibe el campo de texto.
+
+    tecla_especial = false
+    for(var i in especiales) {
+        if(key == especiales[i]) {
+            tecla_especial = true;
+            break;
+        }
+    }
+
+    if(letras.indexOf(tecla) == -1 && !tecla_especial){
+     
+        return false;
+      }
+}
+     // La siguiente funcion valida el elemento input
+function SoloNumeros(evt){
+ if(window.event){//asignamos el valor de la tecla a keynum
+  keynum = evt.keyCode; //IE
+ }
+ else{
+  keynum = evt.which; //FF
+ } 
+ //comprobamos si se encuentra en el rango numérico y que teclas no recibirá.
+ if((keynum > 47 && keynum < 58) || keynum == 8 || keynum == 13 || keynum == 6 ){
+  return true;
+ }
+ else{
+  return false;
+ }
+}
+
+    function myFunction() {
+
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+

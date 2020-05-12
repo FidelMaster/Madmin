@@ -1,0 +1,256 @@
+<style>
+  #myInput {
+    background-position: 10px 12px;
+    /* Position the search icon */
+    background-repeat: no-repeat;
+    /* Do not repeat the icon image */
+    width: 100%;
+    /* Full-width */
+    font-size: 16px;
+    /* Increase font-size */
+    padding: 12px 20px 12px 40px;
+    /* Add some padding */
+    border: 1px solid #ddd;
+    /* Add a grey border */
+    margin-bottom: 12px;
+    /* Add some space below the input */
+  }
+
+  #myTable {
+    border-collapse: collapse;
+    /* Collapse borders */
+    width: 100%;
+    /* Full-width */
+    border: 1px solid #ddd;
+    /* Add a grey border */
+    font-size: 18px;
+    /* Increase font-size */
+  }
+
+  #myTable th,
+  #myTable td {
+    text-align: left;
+    /* Left-align text */
+    padding: 12px;
+    /* Add padding */
+  }
+
+  #myTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+  }
+
+  #myTable tr.header,
+  #myTable tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+  }
+</style>
+{{>inventario/navigation}}
+<div class="col-md-8">
+
+
+<div class="row">
+
+
+  <div class="col-md-6">
+    <h3>Inventario</h3>
+  </div>
+
+
+  <div class="col-sm-6">
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+      Agregar
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Inventariar Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/inventario" method="POST"> 
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Producto:</label>
+                  <div class="custom-file">
+                    <select id="producto" class="form-control" name="id_producto">
+                      <option selected>Seleccione una opcion</option>
+                       {{#each producto}}
+                        <option value="{{id}}"> {{nombre}}</option>
+                       {{/each  }}
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Talla:</label>
+                  <div class="custom-file">
+                    <select id="talla" class="form-control" name="id_talla">
+                      <option selected>Seleccione una opcion</option>
+                       {{#each talla}}
+                        <option value=" {{id}}"> {{nombre}}</option>
+                       {{/each  }}
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label for="validationDefault01">Existencia</label>
+                  <input type="text" class="form-control" id="validationDefault01" name="existencias" placeholder="Cantidad" required>
+                </div>
+               
+
+              </div>
+                <div class="form-row">
+              
+                <div class="col-md-4 mb-3">
+                  <label for="validationDefault02">Existencias Minimas</label>
+                  <input type="text" class="form-control" id="validationDefault01" name="existencias_minimas" placeholder="Existencias Minimas" required>
+
+                </div>
+
+              </div>
+                <button type="submit" class="btn btn-primary">Agregar</button>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+  </div>
+     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#carga">
+      Cargar Productos
+
+    </button>
+
+    <div class="modal fade" id="carga" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Inventariar Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/inventario/carga" method="POST"> 
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Producto:</label>
+                  <div class="custom-file">
+                    <select id="producto" class="form-control" name="id_producto">
+                      <option selected>Seleccione una opcion</option>
+                       {{#each carga}}
+                        <option value="{{id}}"> {{nombre}}</option>
+                       {{/each  }}
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+                <div class="form-row">
+               
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label for="validationDefault01">Cantidad a Cargar</label>
+                  <input type="text" class="form-control" id="validationDefault01" name="cantidad" placeholder="Cantidad" required>
+                </div>
+               
+
+              </div>
+               
+                <button type="submit" class="btn btn-primary">Agregar</button>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<div class="row">
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar por nombre" style="width: 800px;">
+</div>
+<div class="row" style="margin-right: 200px; margin-top:10px;">
+
+
+
+
+  <!-- /.card-header -->
+
+  <table id="example1" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Codigo Producto</th>
+        <th>Nombre</th>
+        <th>Talla</th>
+        <th>Existencias</th>
+        <th>Existencias_minimas</th>
+        <th>Disponibilidad</th>
+        <th></th>
+        <th></th>
+
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {{#each i}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{cod}}</td>
+        <td>{{producto}}</td>
+        <td>{{tallas}}</td>
+        <td>{{existencias}}</td>
+        <td>{{existencias_minima}}</td>
+        <td>{{disponibilidad}}</td>
+        <td><button class="btn btn-primary">editar</button></td>
+        <td><button class="btn btn-danger">eliminar</button></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
+
+</div>
+<script>
+
+  function ShowSelected()
+     {
+       /* Para obtener el valor */
+   
+       var producto= document.getElementById("producto").value;
+       var talla= document.getElementById("talla").value;
+       return parseInt(producto,talla);
+ 
+
+   }
+</script>

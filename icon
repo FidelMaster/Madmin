@@ -1,1 +1,95 @@
    <i class="nav-icon fas fa-chart-pie"></i>
+
+   {{#if user}}
+       {{> navigation}}
+    {{/if}}
+ 
+
+
+
+    <!-- ./col -->
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="info-box">
+
+          <div class="info-box-content">
+            <h1>Tasa de cambio</h1>
+            <div class="info-box">
+              <h1>
+                $
+                {{#each tca}}
+                {{valor}}
+                {{/each}}
+              </h1>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="info-box">
+
+          <div class="info-box-content">
+            <h1>Pedido Mas Recientes</h1>
+            <div class="info-box">
+
+              <div class="info-box-content">
+                <span class="info-box-number">Codigo Venta</span>
+                <span class="info-box-number">{{codVenta}}</span>
+                <span class="info-box-number">Total Facturado</span>
+                <span class="info-box-number">${{total}}</span>
+                <span class="info-box-number">Estado</span>
+                <span class="badge {{color}}">{{estado}}</span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="info-box">
+
+          <div class="info-box-content">
+            <h1>Producto Mas Popular</h1>
+
+            <div class="info-box">
+              {{#each prod}}
+
+              <img src="{{imagen}}" style="height: 150px; widht:150px;">
+              <div class="info-box-content">
+
+                <span class="info-box-number">{{nombre}}</span>
+                <span class="info-box-text">Veces en bolsa</span>
+                <span class="info-box-number">{{suma}}</span>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info-box">
+
+          <div class="info-box-content">
+            <h1>Cliente Mas Frecuente</h1>
+
+            <div class="info-box">
+              <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">{{nombre}} {{apellido}}</span>
+                <span class="info-box-number">{{correo}}</span>
+
+                <span class="info-box-number">{{celular}}</span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
