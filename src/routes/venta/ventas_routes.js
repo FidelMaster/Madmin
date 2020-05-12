@@ -181,6 +181,14 @@ router.post('/enviar/Transito/:id', isLoggedIn, async (req, res) => {
 
 router.post('/entregar/Transito/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
+    //Aca pienso actualizar la tabla del inventario, cuando se entrega el producto se entrega descuenta las existencias
+    const id_factura = await pool.query('SELECT cod_factura FROM tblpedido_pedido_cliente where id=? ',[id])
+   
+    const datos= await pool.query('select id_producto,cantidad,id_talla from tblventa_factura_detalle where cod_factura=?',[id_factura[0].cod_factura])
+   
+    for (let index = 0; index < datos.length; index++) {
+        await pool.query('update tblinv_inventario set existencias=existencias-? where id_producto=? and id_tallas=?',[datos[index].cantidad,datos[index].id_producto,datos[index].id_talla])
+      }
     await pool.query('update tblpedido_pedido_cliente set id_estado=8 where cod_factura=?', [id]);
     res.redirect('/pedidos');
 });
