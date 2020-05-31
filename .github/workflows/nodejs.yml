@@ -1,8 +1,9 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
+# En este fichero defino el workflow de la app, como se va a ejecutar en linux configuro el runs-on en ubuntu
+# 
 name: Node.js CI
+# En este metodo del push decido hacerlo directo a la master, pienso crear una rama distinta y luego hacer el merge
 
+#En el node version uso la version que tengo en mi pc 
 on:
   push:
     branches: [ master ]

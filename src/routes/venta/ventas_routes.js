@@ -148,7 +148,18 @@ router.get('/pedido/transito/:id', isLoggedIn, async (req, res) => {
 });
 
 
+router.get('/pedido/reparto/:id', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const estado = await pool.query('select pe.id, pe.estado as nombre from tblpedido_pedido_cliente pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) where cod_factura=?', [id]);
+    const pd = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) inner join tblventa_factura_detalle  as fdc on(pc.cod_factura=fdc.cod_factura) inner join tblinv_producto as p on(fdc.id_producto=p.id) where pc.cod_factura=?', [id]);
+    const persona = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblusuarios_persona tp on(pc.id_user=tp.id_user) inner join tblusuarios_clientes as tuc on(tuc.id_persona=tp.id) where pc.cod_factura=?', [id])
+    const cod = await pool.query('select * from tblpedido_pedido_cliente where cod_factura=?', [id]);
+    const totales = await pool.query('select * from tblventa_factura_pago where cod_factura=?', [id]);
+    const r = await pool.query('select tr.id, concat(p.nombre," ",p.apellido) as nombre from tblusuarios_repartidor as tr inner join tblusuarios_persona as p on(tr.id_persona=p.id) inner join tbladmin_users as u on(p.id_user=u.id)')
+ 
 
+    res.render('venta/pedidos/detalleT', { pd, persona, cod, totales, estado,r });
+});
 
 
 
@@ -181,33 +192,28 @@ router.post('/enviar/Transito/:id', isLoggedIn, async (req, res) => {
 
 router.post('/entregar/Transito/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    //Aca pienso actualizar la tabla del inventario, cuando se entrega el producto se entrega descuenta las existencias
-    const id_factura = await pool.query('SELECT cod_factura FROM tblpedido_pedido_cliente where id=? ',[id])
-   
-    const datos= await pool.query('select id_producto,cantidad,id_talla from tblventa_factura_detalle where cod_factura=?',[id_factura[0].cod_factura])
-   
+    const datos= await pool.query('select id_producto,cantidad,id_talla from tblventa_factura_detalle where cod_factura=?',[id])
     for (let index = 0; index < datos.length; index++) {
         await pool.query('update tblinv_inventario set existencias=existencias-? where id_producto=? and id_tallas=?',[datos[index].cantidad,datos[index].id_producto,datos[index].id_talla])
-      }
+    }
     await pool.query('update tblpedido_pedido_cliente set id_estado=8 where cod_factura=?', [id]);
     res.redirect('/pedidos');
 });
 
 
 
-router.get('/pedido/transito/:id', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
-    const estado = await pool.query('select pe.id, pe.estado as nombre from tblpedido_pedido_cliente pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) where cod_factura=?', [id]);
-    const pd = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) inner join tblventa_factura_detalle  as fdc on(pc.cod_factura=fdc.cod_factura) inner join tblinv_producto as p on(fdc.id_producto=p.id) where pc.cod_factura=?', [id]);
-    const persona = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblusuarios_persona tp on(pc.id_user=tp.id_user) inner join tblusuarios_clientes as tuc on(tuc.id_persona=tp.id) where pc.cod_factura=?', [id])
-    const cod = await pool.query('select * from tblpedido_pedido_cliente where cod_factura=?', [id]);
-    const totales = await pool.query('select * from tblventa_factura_pago where cod_factura=?', [id]);
+//router.get('/pedido/transito/:id', isLoggedIn, async (req, res) => {
+  //  const { id } = req.params;
+    //const estado = await pool.query('select pe.id, pe.estado as nombre from tblpedido_pedido_cliente pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) where cod_factura=?', [id]);
+    //const pd = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) inner join tblventa_factura_detalle  as fdc on(pc.cod_factura=fdc.cod_factura) inner join tblinv_producto as p on(fdc.id_producto=p.id) where pc.cod_factura=?', [id]);
+    //const persona = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblusuarios_persona tp on(pc.id_user=tp.id_user) inner join tblusuarios_clientes as tuc on(tuc.id_persona=tp.id) where pc.cod_factura=?', [id])
+    //const cod = await pool.query('select * from tblpedido_pedido_cliente where cod_factura=?', [id]);
+    //const totales = await pool.query('select * from tblventa_factura_pago where cod_factura=?', [id]);
 
-    const r = await pool.query('select tr.id, concat(p.nombre," ",p.apellido) as nombre from tblusuarios_repartidor as tr inner join tblusuarios_persona as p on(tr.id_persona=p.id) inner join tbladmin_users as u on(p.id_user=u.id)')
- 
-    console.log(cod)
-    res.render('venta/pedidos/detalleT',{ pd, persona, cod, totales, estado,r });
-});
+
+//    console.log(cod)
+   // res.render('venta/pedidos/detalleT',{ pd, persona, cod, totales, estado,r });
+//});
 
 
 

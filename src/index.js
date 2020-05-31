@@ -9,7 +9,7 @@ const flash = require('connect-flash');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const busboy = require("then-busboy");
-
+const cors = require('cors');
 const { database } = require('../Model/cadena');
 
 // Intializations
@@ -32,6 +32,8 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use(session({
   secret: 'mombashop',
@@ -57,6 +59,7 @@ app.use((req, res, next) => {
 app.use(require('./routes/index'));
 app.use(require('./routes/authentication'));
 app.use(require('./routes/admin'));
+app.use(require('./routes/api/api_routes'));
 app.use(require('./routes/venta/ventas_routes'));
 app.use(require('./routes/inventario/inventario_routes'));
 
