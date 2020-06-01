@@ -30,7 +30,7 @@ app.set('view engine', '.hbs');
 
 // Middlewares
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(cors());
@@ -39,11 +39,13 @@ app.use(session({
   secret: 'mombashop',
   resave: false,
   saveUninitialized: false,
+  cookie:{_expires : 900000},
   store: new MySQLStore(database)
 }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+ 
 //app.use(validator());
 
  

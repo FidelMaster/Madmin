@@ -9,9 +9,9 @@ passport.use('local.signin', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, async (req, correo, clave, done) => {
-  console.log(correo)
+  console.log(clave)
   
-  const rows = await pool.query('select  u.id,u.correo ,u.password from tbladmin_users as u inner join tbladmin_roles_users as rol on(rol.id_user=u.id) WHERE u.correo = ? and rol.id_role in (2,3,4)', [correo]);
+  const rows = await pool.query('select  u.id,u.correo ,u.password from tbladmin_users as u inner join tbladmin_roles_users as rol on(rol.id_user=u.id) WHERE u.correo = ? and rol.id_role in (2,3,4,5)', [correo]);
   if (rows.length > 0) {
     const user = rows[0];
      

@@ -6,12 +6,12 @@ const { isLoggedIn } = require('../../lib/auth');
  
 const { allPedido ,showPedido, updatePedido} = require('../../controllers/api/repartidor.controller');
  
-const {signIn ,signinSuccess, signinFailure,logOut } = require('../../controllers/api/user.controller');
+const {LogIn ,signinSuccess, signinFailure,logOut } = require('../../controllers/api/user.controller');
 
 router.get('/api/v1/pedidos/repartidor/:id',allPedido);
 
 //Route group for api - Login
-router.post('/api/v1/login',signIn);
+router.post('/api/v1/login',LogIn);
 router.get('/api/user/authenticate',signinSuccess);
 router.get('/api/user/authenticate/failure',signinFailure);
 router.post('/api/user/logout',logOut);
