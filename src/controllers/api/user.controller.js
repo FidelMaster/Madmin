@@ -21,7 +21,7 @@ userCTRL.LogIn = async (req, res, next) => {
                  const data = await pool.query('select tu.id as id, tp.nombre, tp.apellido,tp.fecha_nacimiento,trd.modelo_carro,trd.placa,trd.color from tbladmin_users as tu inner join tblusuarios_persona as tp on (tp.id_user=tu.id) inner join tblusuarios_repartidor as tr on(tr.id_persona=tp.id) inner join tblusuarios_repartidor_detalle as trd on(trd.id_repartidor=tr.id)WHERE tu.id = ?', [ user.id]);
 
                 //Send back the token to the user
-                return res.json({data});
+                return res.json(data);
             });
         } catch (error) {
             return next(error);
