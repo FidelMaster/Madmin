@@ -19,9 +19,9 @@ userCTRL.LogIn = async (req, res, next) => {
                 //user password in the token so we pick only the email and id
               
                  const data = await pool.query('select tu.id as id, tp.nombre, tp.apellido,tp.fecha_nacimiento,trd.modelo_carro,trd.placa,trd.color from tbladmin_users as tu inner join tblusuarios_persona as tp on (tp.id_user=tu.id) inner join tblusuarios_repartidor as tr on(tr.id_persona=tp.id) inner join tblusuarios_repartidor_detalle as trd on(trd.id_repartidor=tr.id)WHERE tu.id = ?', [ user.id]);
-
-                //Send back the token to the user
-                return res.json(data);
+              
+                //Send back the token to the userJSON.parse()
+                return res.json(data[0]);
             });
         } catch (error) {
             return next(error);
@@ -31,10 +31,9 @@ userCTRL.LogIn = async (req, res, next) => {
 
 //Si el login es exitoso uso este metodo
 userCTRL.signinSuccess = async (req, res) => {
-    console.log('im here in sucesss ');
-    console.log(req.user);
+    
     const data = await pool.query('select tu.id as id, tp.nombre, tp.apellido,tp.fecha_nacimiento,trd.modelo_carro,trd.placa,trd.color from tbladmin_users as tu inner join tblusuarios_persona as tp on (tp.id_user=tu.id) inner join tblusuarios_repartidor as tr on(tr.id_persona=tp.id) inner join tblusuarios_repartidor_detalle as trd on(trd.id_repartidor=tr.id)WHERE tu.id = ?', [req.user.id]);
-    res.status(200).json(data)
+    res.status(200).json({data})
 };
 
 // si el login falla se ejecuta este metodo
