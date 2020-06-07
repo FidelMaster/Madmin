@@ -4,7 +4,7 @@ const userCTRL = {};
 const pool = require('../../../Model/bd');
 const passport = require("passport");
 
-//metodo logpar autenticar
+//method for auth
 userCTRL.LogIn = async (req, res, next) => {
     console.log('im here')
     passport.authenticate("local.signin", async (err, user, info) => {
@@ -13,14 +13,13 @@ userCTRL.LogIn = async (req, res, next) => {
                 const error = new Error('An Error occurred')
                 return next(error);
             }
+            // i will use session:false because i don't create session in server 
             req.login(user, { session: false }, async (error) => {
                 if (error) return next(error)
-                //We don't want to store the sensitive information such as the
-                //user password in the token so we pick only the email and id
-              
-                 const data = await pool.query('select tu.id as id, tp.nombre, tp.apellido,tp.fecha_nacimiento,trd.modelo_carro,trd.placa,trd.color from tbladmin_users as tu inner join tblusuarios_persona as tp on (tp.id_user=tu.id) inner join tblusuarios_repartidor as tr on(tr.id_persona=tp.id) inner join tblusuarios_repartidor_detalle as trd on(trd.id_repartidor=tr.id)WHERE tu.id = ?', [ user.id]);
-              
-                //Send back the token to the userJSON.parse()
+                  // the user object contain user information: email, password and id 
+                 // only return user id
+                 const data = await pool.query('select  id from tbladmin_users WHERE id = ?', [ user.id]);
+                 //return data variable
                 return res.json(data[0]);
             });
         } catch (error) {
@@ -29,11 +28,12 @@ userCTRL.LogIn = async (req, res, next) => {
     })(req, res, next);
 };
 
-//Si el login es exitoso uso este metodo
-userCTRL.signinSuccess = async (req, res) => {
-    
-    const data = await pool.query('select tu.id as id, tp.nombre, tp.apellido,tp.fecha_nacimiento,trd.modelo_carro,trd.placa,trd.color from tbladmin_users as tu inner join tblusuarios_persona as tp on (tp.id_user=tu.id) inner join tblusuarios_repartidor as tr on(tr.id_persona=tp.id) inner join tblusuarios_repartidor_detalle as trd on(trd.id_repartidor=tr.id)WHERE tu.id = ?', [req.user.id]);
-    res.status(200).json({data})
+//if login method is positive, in my app i will request this end point for get user information 
+userCTRL.getUserByID = async (req, res) => {
+    //i get id from params and after return data information
+    let {id} = req.params;
+    const data = await pool.query('select tr.id as id, concat(tp.nombre," ", tp.apellido) as nombre, date_format(tp.fecha_nacimiento, "%d-%m-%Y") as fecha,trd.modelo_carro as vehiculo,trd.placa,trd.color from  tblusuarios_persona as tp  inner join tblusuarios_repartidor as tr on(tr.id_persona=tp.id) inner join tblusuarios_repartidor_detalle as trd on(trd.id_repartidor=tr.id) WHERE tp.id_user = ?', [id]);
+    res.status(200).json(data[0])
 };
 
 // si el login falla se ejecuta este metodo
@@ -42,7 +42,7 @@ userCTRL.signinFailure = async (req, res) => {
     res.status(500).json({ message: 'Datos Incorrectos, Favor verifique nuevamente' })
 };
 
-//Metodo para destruir la session
+//this method is use  for close session in server (on this moment i don't use this )
 userCTRL.logOut = async (req, res) => {
     req.logOut();
     res.status(200).json({ message: 'Sesion Finalizada' })

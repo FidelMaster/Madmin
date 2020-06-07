@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const puppeteer = require('puppeteer');
 const pool = require('../../Model/bd');
 const { isLoggedIn } = require('../lib/auth');
-const path = require('path');
-const passport = require('passport');
-//const { isLoggedIn } = require('../lib/auth');
-const handlebars = require("handlebars");
-const fs = require("fs");
-const multer = require('multer');
-
 
 
 router.get('/admin/tiposU', isLoggedIn, async (req, res) => {

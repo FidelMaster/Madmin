@@ -4,9 +4,7 @@ const { check, validationResult } = require('express-validator');
 const puppeteer = require('puppeteer');
 const pool = require('../../../Model/bd');
 const { isLoggedIn } = require('../../lib/auth');
-const path = require('path');
-const passport = require('passport');
-//const { isLoggedIn } = require('../lib/auth');
+
 const handlebars = require("handlebars");
 const fs = require("fs");
 const multer = require('multer');
@@ -199,22 +197,6 @@ router.post('/entregar/Transito/:id', isLoggedIn, async (req, res) => {
     await pool.query('update tblpedido_pedido_cliente set id_estado=8 where cod_factura=?', [id]);
     res.redirect('/pedidos');
 });
-
-
-
-//router.get('/pedido/transito/:id', isLoggedIn, async (req, res) => {
-  //  const { id } = req.params;
-    //const estado = await pool.query('select pe.id, pe.estado as nombre from tblpedido_pedido_cliente pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) where cod_factura=?', [id]);
-    //const pd = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblpedido_estado as pe on(pc.id_estado=pe.id) inner join tblventa_factura_detalle  as fdc on(pc.cod_factura=fdc.cod_factura) inner join tblinv_producto as p on(fdc.id_producto=p.id) where pc.cod_factura=?', [id]);
-    //const persona = await pool.query('select * from tblpedido_pedido_cliente as pc inner join tblusuarios_persona tp on(pc.id_user=tp.id_user) inner join tblusuarios_clientes as tuc on(tuc.id_persona=tp.id) where pc.cod_factura=?', [id])
-    //const cod = await pool.query('select * from tblpedido_pedido_cliente where cod_factura=?', [id]);
-    //const totales = await pool.query('select * from tblventa_factura_pago where cod_factura=?', [id]);
-
-
-//    console.log(cod)
-   // res.render('venta/pedidos/detalleT',{ pd, persona, cod, totales, estado,r });
-//});
-
 
 
 module.exports = router;
