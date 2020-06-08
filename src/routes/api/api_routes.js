@@ -4,13 +4,15 @@ const { isLoggedIn } = require('../../lib/auth');
  
 //const { isLoggedIn } = require('../lib/auth');
  
-const { allPedido ,showPedido, updatePedido} = require('../../controllers/api/repartidor.controller');
+const { allPedido ,showPedido,showPedidoProduct,showPedidoPaymentDetails, updatePedido} = require('../../controllers/api/repartidor.controller');
  
 const {LogIn ,getUserByID, signinFailure,logOut } = require('../../controllers/api/user.controller');
 
 //routes for orders
 router.get('/api/v1/pedidos/repartidor/:id',allPedido);
 router.get('/api/v1/pedidos/repartidor/detalle/:id',showPedido);
+router.get('/api/v1/pedidos/repartidor/products/:id',showPedidoProduct);
+router.get('/api/v1/pedidos/repartidor/payments/:id',showPedidoPaymentDetails);
 router.get('/api/v1/pedidos/repartidor/entregar/:id',updatePedido);
 
 //Route group for api - Login
