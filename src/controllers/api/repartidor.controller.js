@@ -18,8 +18,8 @@ pedidoCTRL.showPedido = async (req, res) => {
     const client = await pool.query('select concat(tp.nombre, " ",tp.apellido) as nombre,tp.ciudad, tp.direccion, tuc.telefono,tuc.celular from tblpedido_pedido_cliente as pc inner join tblusuarios_persona tp on(pc.id_user=tp.id_user) inner join tblusuarios_clientes as tuc on(tuc.id_persona=tp.id) where pc.cod_factura=?', [id]);
     const product= await pool.query('select p.codproducto,p.nombre,fdc.cantidad,till.nombre as talla from tblpedido_pedido_cliente as pc inner join tblventa_factura_detalle as fdc on(pc.cod_factura=fdc.cod_factura) inner join tblinv_producto as p on(fdc.id_producto=p.id) inner join tblinv_talla_producto as til on(til.id_producto=p.id) right join tblinv_tallas as till on(til.id_talla=till.id)  where pc.cod_factura=?', [id])
     const payment =await pool.query('select subtotal,tax,total from tblventa_factura_pago where cod_factura=? ',[id])
-    res.status(200).json({client,product,payment})
-};
+    res.status(200).json([{client,product,payment}])
+}; 
 
 
 //Este Metodo se utilizara para actualizar  el pedido 

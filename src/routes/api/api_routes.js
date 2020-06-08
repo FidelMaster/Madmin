@@ -11,7 +11,7 @@ const {LogIn ,getUserByID, signinFailure,logOut } = require('../../controllers/a
 //routes for orders
 router.get('/api/v1/pedidos/repartidor/:id',allPedido);
 router.get('/api/v1/pedidos/repartidor/detalle/:id',showPedido);
-router.put('/api/v1/pedidos/repartidor/entregar/:id',updatePedido);
+router.get('/api/v1/pedidos/repartidor/entregar/:id',updatePedido);
 
 //Route group for api - Login
 router.post('/api/v1/login',LogIn);
