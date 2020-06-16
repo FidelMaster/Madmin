@@ -14,19 +14,31 @@ router.get('/registro', (req, res) => {
 
 router.post('/registro', async (req, res) => {
   const { correo, password, nombre, apellido, date, rol } = req.body;
-  console.log(req.body);
-  console.log('Im here');
-
+ 
   const password_encrip = await helpers.encryptPassword(password);
-  console.log(password_encrip);
-  // Saving in the Database
-  await pool.query('INSERT INTO tbladmin_users(correo,password) value(?,?) ', [correo, password_encrip]);
-  const id = await pool.query('select id from tbladmin_users where correo=?', [correo])
-  await pool.query('insert into tbladmin_roles_users(id_role,id_user) values(?,?)', [rol, id[0].id]);
-  await pool.query('insert  tblusuarios_persona(id_user,nombre, apellido,fecha_nacimiento) values(?,?,?,?)', [id[0].id, nombre, apellido, date]);
-  id_p = await pool.query('select id from tblusuarios_persona where id_user=?', [id[0].id]);
-  await pool.query('insert  tblusuarios_empleados(id_persona) values(?)', [id_p[0].id]);
-  res.redirect('/admin/usuario')
+  const exist= await pool.query('select * from tbladmin_users where correo=?', [correo])
+  if (exist.length>0)
+  {
+    console.log('here')
+    req.flash('errorMessage', 'El empleado no pudo ser registrado.');
+
+    req.flash('errorMessage', 'El Correo que usted intenta utilizar ya esta en uso.');
+
+    res.redirect('/admin/usuario');
+ 
+  }else{
+    console.log('i here')
+    console.log(password_encrip);
+    // Saving in the Database
+    await pool.query('INSERT INTO tbladmin_users(correo,password) value(?,?) ', [correo, password_encrip]);
+    const id = await pool.query('select id from tbladmin_users where correo=?', [correo])
+    await pool.query('insert into tbladmin_roles_users(id_role,id_user) values(?,?)', [rol, id[0].id]);
+    await pool.query('insert  tblusuarios_persona(id_user,nombre, apellido,fecha_nacimiento) values(?,?,?,?)', [id[0].id, nombre, apellido, date]);
+    id_p = await pool.query('select id from tblusuarios_persona where id_user=?', [id[0].id]);
+    await pool.query('insert  tblusuarios_empleados(id_persona) values(?)', [id_p[0].id]);
+    res.redirect('/admin/usuario')
+
+  }
 
 }
 
@@ -36,8 +48,6 @@ router.post('/registro', async (req, res) => {
 // en esta ruta se autenticara el usuario de ventas
 router.post('/venta/login', async(req, res, next) => {
   const {correo,password}=req.body
-  console.log(req.body)
-  console.log(correo)
   check('correo').isEmail();
   const errors = validationResult(req);
   if (errors.length > 0) {
@@ -53,7 +63,7 @@ router.post('/venta/login', async(req, res, next) => {
 
       passport.authenticate('local.signin', {
         successRedirect: '/venta/perfil',
-        failureRedirect: '/login/venta',
+        failureRedirect: '/login/ventas',
         failureFlash: true
       })(req, res, next);
     } else {
@@ -145,7 +155,7 @@ router.get('/inventario/logout', (req, res) => {
 
 
 router.get('/venta/perfil', isLoggedIn, async (req, res) => {
-  console.log(req)
+  
   //Total Pedidos Pendientes
   const tpp = await pool.query('select count(id) as totalPedido from tblpedido_pedido_cliente where id_estado=6');
   //Total de ventas

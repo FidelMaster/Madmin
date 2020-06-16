@@ -1,14 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const puppeteer = require('puppeteer');
 const pool = require('../../../Model/bd');
 const { isLoggedIn } = require('../../lib/auth');
-const path = require('path');
-const passport = require('passport');
 //const { isLoggedIn } = require('../lib/auth');
-const handlebars = require("handlebars");
-const fs = require("fs");
 const multer = require('multer');
 
 
@@ -66,11 +60,11 @@ router.get('/producto/camisas',isLoggedIn,async (req, res) => {
 
   //aca se suben las imagenes al servidor 
   const DIR = '../Madmin/src/public/images/Products';
-  const dir2='../Momba/src/public/images/Products';
+ // const dir2='../Momba/src/public/images/Products';
   let storage = multer.diskStorage({
    destination: function (req, file, callback) {
      callback(null, DIR);
-     callback(null, dir2);
+  //   callback(null, dir2);
    },
    filename: function (req, file, cb) {
      cb(null, file.originalname);
@@ -109,12 +103,9 @@ router.get('/producto/camisas',isLoggedIn,async (req, res) => {
 
 
   router.post('/inventario/carga', async(req,res)=>{
- 
     const {id_producto,cantidad}=req.body;
     await pool.query('update tblinv_inventario set existencias=existencias+? where id=?',[cantidad,id_producto]);
-     
     await pool.query('update tblinv_inventario set disponibilidad=disponibilidad+? where id=?',[cantidad,id_producto]);
-     
     res.redirect('/inventario')
   
    });

@@ -81,23 +81,23 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Correo</label>
-                                    <input type="email" name="correo" class="form-control" id="inputEmail4" placeholder="Email">
+                                    <input type="email" name="correo" required class="form-control" id="inputEmail4" placeholder="Email">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Password</label>
-                                    <input type="password" name="password" class="form-control" id="inputPassword4"
+                                    <input type="password" required name="password" class="form-control" id="inputPassword4"
                                         placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault01">Nombre</label>
-                                    <input type="text" onKeyPress="return soloLetras(event);"  name="nombre" class="form-control" id="validationDefault01"
+                                    <input type="text" required onKeyPress="return soloLetras(event);"  name="nombre" class="form-control" id="validationDefault01"
                                         placeholder="Nombre" required>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault02">Apellido</label>
-                                    <input type="text" onKeyPress="return soloLetras(event);"  name="apellido" class="form-control" id="validationDefault02"
+                                    <input type="text" required onKeyPress="return soloLetras(event);"  name="apellido" class="form-control" id="validationDefault02"
                                         placeholder="Apellido" required>
                                 </div>
 
@@ -105,11 +105,11 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                     <label for="validationDefault03">Fecha Nacimiento</label>
-                                    <input id="date" type="date" name="date" id="validationDefault03">
+                                    <input id="date" type="date" name="date" id="validationDefault03" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="validationDefault04">Tipo Usuario</label>
-                                    <select id="rol" name="rol" class="form-control">
+                                    <select id="rol" name="rol" class="form-control" required>
                                         <option selected>Seleccione una opcion</option>
                                         <option>...</option>
                                         {{#each roles}}
@@ -156,11 +156,11 @@
         <tbody>
             {{#each p}}
             <tr>
-                <td>US-{{id}}</td>
+                <td>0 {{id}}</td>
                 <td>{{nombre}}</td>
                 <td>{{apellido}}</td>
                 <td>{{correo}}</td>
-                <td>{{fecha_nacimiento}}</td>
+                <td>{{fecha}}</td>
                 <td>{{rol}}</td>
                 <td><button class="btn btn-primary">editar</button></td>
                 <td><button class="btn btn-danger">eliminar</button></td>
