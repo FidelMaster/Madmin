@@ -7,7 +7,7 @@ const pool = require('../../../Model/bd');
 //this method i use for list all orders relation for deliver 
 pedidoCTRL.allPedido = async (req, res) => {
     const { id } = req.params;
-    const data= await pool.query('select tpr.cod_pedido,tfp.cod_factura, concat(tp.nombre," ",tp.apellido) as nombre,tp.codigoPostal,tp.direccion, date_format(tbc.fecha, "%d-%m-%Y") as fecha,tfp.total  from tblpedido_pedido_repartidor as tpr inner join tblpedido_pedido_cliente as tbc on(tpr.cod_pedido=tbc.id)  inner join tbladmin_users as tau on(tbc.id_user=tau.id) inner join tblusuarios_persona  as tp on(tp.id_user=tau.id)  inner join tblventa_factura_pago as tfp on(tbc.cod_factura=tfp.cod_factura) WHERE  tpr.cod_repartidor = ?', [id]);
+    const data= await pool.query('select tpr.cod_pedido,tfp.cod_factura, concat(tp.nombre," ",tp.apellido) as nombre,tp.codigoPostal,tp.direccion, date_format(tbc.fecha, "%d-%m-%Y") as fecha,tfp.total  from tblpedido_pedido_repartidor as tpr inner join tblpedido_pedido_cliente as tbc on(tpr.cod_pedido=tbc.cod_factura)  inner join tbladmin_users as tau on(tbc.id_user=tau.id) inner join tblusuarios_persona  as tp on(tp.id_user=tau.id)  inner join tblventa_factura_pago as tfp on(tbc.cod_factura=tfp.cod_factura) WHERE  tpr.cod_repartidor = ?', [id]);
     res.status(200).json(data)
 };
 
