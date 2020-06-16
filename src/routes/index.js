@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { isLoggedIn } = require('../lib/auth');
 //ruta inicial
 router.get('/', async (req, res) => {
     res.render('inicio');

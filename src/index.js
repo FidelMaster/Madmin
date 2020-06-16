@@ -39,7 +39,8 @@ app.use(session({
   secret: 'mombashop',
   resave: false,
   saveUninitialized: false,
-  store: new MySQLStore(database)
+  store: new MySQLStore(database),
+  cookie: { _expires : 2000000}
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -55,6 +56,7 @@ app.use((req, res, next) => {
   app.locals.user = req.user;
   next();
 });
+
 
 // Routes
 app.use(require('./routes/index'));
